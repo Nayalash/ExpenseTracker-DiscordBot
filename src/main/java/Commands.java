@@ -74,7 +74,7 @@ public class Commands extends ListenerAdapter {
                 for(Expense expense : fetchExpenses()) {
                     channel.sendMessage("```Your Expense: " + expense.getName() + ", Your Price: " + expense.getPrice() + ", Your Description: " + expense.getDescription() + "```").complete();
 
-                    if (expense.getName() == null && expense.getDescription() == null && expense.getPrice() == 0 ){
+                    if (expense.getName() == null || expense.getDescription() == null || expense.getPrice() == 0) {
                         channel.sendMessage("```There is nothing to list...````").complete();
                     }
                 }
@@ -89,8 +89,8 @@ public class Commands extends ListenerAdapter {
                         .reduce(Float::sum).get();
                 channel.sendMessage("Your Total is: " + total).complete();
 
-                if (total != 0){
-                    channel.sendMessage("Nothing to Show");
+                if (total == 0){
+                    channel.sendMessage("```Nothing to Show...```").complete();
                 }
             } catch (IOException e) {e.printStackTrace();}
         }
@@ -105,9 +105,8 @@ public class Commands extends ListenerAdapter {
             }
             writer.print("");
             writer.close();
+            channel.sendMessage("```Database Deleted...```").complete();
         }
-
-        channel.sendMessage("```Database Deleted...```").complete();
 
     }
 
