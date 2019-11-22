@@ -5,10 +5,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +42,7 @@ public class Commands extends ListenerAdapter {
 
         }
 
-        String rawMessage[] = event.getMessage().getContentRaw().split(" ");
+        String[] rawMessage = event.getMessage().getContentRaw().split(" ");
         MessageChannel channel = event.getChannel();
 
         if(rawMessage[0].equals("!add")) {
@@ -87,6 +84,18 @@ public class Commands extends ListenerAdapter {
                         .reduce(Float::sum).get();
                 channel.sendMessage("Your Total is: " + total).complete();
             } catch (IOException e) {e.printStackTrace();}
+        }
+
+
+        else if (content.equals("!remove")){
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter("prices.txt");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            writer.print("");
+            writer.close();
         }
 
     }
