@@ -12,14 +12,6 @@ repositories {
     jcenter()
 }
 
-jar {
-    manifest {
-        attributes(
-                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'Bot'
-        )
-    }
-}
 
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
@@ -34,4 +26,14 @@ stage.dependsOn(copyToLib)
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'net.dv8tion:JDA:4.0.0_62'
+}
+
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'Bot'
+        )
+    }
 }
